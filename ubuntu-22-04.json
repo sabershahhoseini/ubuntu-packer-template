@@ -1,0 +1,54 @@
+{
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "boot_command": [
+              "c<wait>",
+              "linux /casper/vmlinuz --- autoinstall ds=\"nocloud-net;seedfrom=http://{{.HTTPIP}}:{{.HTTPPort}}/\"",
+              "<enter><wait>",
+              "initrd /casper/initrd",
+              "<enter><wait>",
+              "boot",
+              "<enter>"
+            ],
+            "boot_wait": "5s",
+            "disk_size": 81920,
+            "guest_os_type": "Ubuntu_64",
+            "headless": false,
+            "http_directory": "http",
+            "iso_urls": [
+                "https://cdimage.ubuntu.com/ubuntu-server/jammy/daily-live/current/jammy-live-server-amd64.iso"
+            ],
+            "iso_checksum": "9bf7f6e3bfc54d687aa92a64527ba7a8299db032179de20219a9c25b939120ad",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "ssh_port": 22,
+            "ssh_wait_timeout": "10000s",
+            "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
+            "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+            "virtualbox_version_file": ".vbox_version",
+            "vm_name": "packer-ubuntu-22.04.1-amd64",
+            "vboxmanage": [
+            [
+                "modifyvm",
+                "{{.Name}}",
+                "--memory",
+                "1024"
+            ],
+            [
+                "modifyvm",
+                "{{.Name}}",
+                "--cpus",
+                "1"
+            ]
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "playbook_file": "./ansible/playbook.yml",
+            "type": "ansible",
+            "user": "vagrant"
+        }
+    ]
+}

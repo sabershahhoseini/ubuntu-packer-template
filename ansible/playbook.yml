@@ -1,0 +1,12 @@
+---
+# playbook.yml
+- name: 'Provision Image'
+  hosts: default
+  become: true
+
+  tasks:
+    - name: install NGINX
+      package:
+        update_cache: yes
+        name: 'nginx'
+        state: present
