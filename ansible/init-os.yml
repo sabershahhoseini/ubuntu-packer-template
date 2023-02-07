@@ -1,0 +1,23 @@
+---
+# playbook.yml
+#
+- name: Config OS
+  hosts: default
+  become: true
+  tasks:
+    - name: Change GRUB config (predictable interface names config)
+      lineinfile:
+        dest: /etc/default/grub
+        regexp: '^GRUB_CMDLINE_LINUX=".*'
+        line: 'GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"'
+        state: present
+    
+    - name: Update GRUB config using "update-grub" command
+      shell: update-grub
+    
+    - name: Change fstab config for predictable root lv device name
+      lineinfile:
+        dest: /etc/fstab
+        regexp: '^/dev/disk/.* / ext4 defaults 0 1$'
+        line: '/dev/ubuntu-vg/ubuntu-lv / ext4 defaults 0 1'
+        state: present

@@ -12,14 +12,14 @@
               "<enter>"
             ],
             "boot_wait": "5s",
-            "disk_size": 81920,
+            "disk_size": 25000,
             "guest_os_type": "Ubuntu_64",
             "headless": false,
             "http_directory": "http",
             "iso_urls": [
-                "https://cdimage.ubuntu.com/ubuntu-server/jammy/daily-live/current/jammy-live-server-amd64.iso"
+                "https://releases.ubuntu.com/22.04/ubuntu-22.04.1-live-server-amd64.iso"
             ],
-            "iso_checksum": "9bf7f6e3bfc54d687aa92a64527ba7a8299db032179de20219a9c25b939120ad",
+            "iso_checksum": "10f19c5b2b8d6db711582e0e27f5116296c34fe4b313ba45f9b201a5007056cb",
             "ssh_username": "vagrant",
             "ssh_password": "vagrant",
             "ssh_port": 22,
@@ -45,8 +45,8 @@
         }
     ],
     "provisioners": [
-        {
-            "playbook_file": "./ansible/playbook.yml",
+	{
+            "playbook_file": "./ansible/init-os.yml",
             "type": "ansible",
             "user": "vagrant"
         }
